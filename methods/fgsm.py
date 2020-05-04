@@ -15,9 +15,9 @@ class FGSM(Attack):
         target_cls {nn.Module} -- Target classifier to fool
         eps {float} -- Magnitude of perturbation
     """
-    def __init__(self, target_cls, eps=0.003):
+    def __init__(self, target_cls, args):
         super(FGSM, self).__init__("FGSM", target_cls)
-        self.eps = eps
+        self.eps = args.fgsm_eps
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, imgs, labels):

@@ -14,9 +14,9 @@ class DeepFool(Attack):
         target_cls {nn.Module} -- Target classifier to fool
         n_iters {n_iters} -- Step size
     """
-    def __init__(self, target_cls, n_iters=5):
+    def __init__(self, target_cls, args):
         super(DeepFool, self).__init__("DeepFool", target_cls)
-        self.n_iters = n_iters
+        self.n_iters = args.deepFool_iters
 
     def forward(self, imgs, _):
         imgs = imgs.to(self.device)

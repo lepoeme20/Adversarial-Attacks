@@ -16,12 +16,12 @@ class PGD(Attack):
         n_iters {int} -- Step size
         random_start {bool} -- If ture, initialize perturbation using eps
     """
-    def __init__(self, target_cls, eps=0.3, alpha=2/225, n_iters=40, random_start=False):
+    def __init__(self, target_cls, args):
         super(PGD, self).__init__("PGD", target_cls)
-        self.eps = eps
-        self.alpha = alpha
-        self.n_iters = n_iters
-        self.random_start = random_start
+        self.eps = args.pgd_eps
+        self.alpha = args.pgd_alpha
+        self.n_iters = args.pgd_iters
+        self.random_start = args.pgd_random_start
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, imgs, labels):
