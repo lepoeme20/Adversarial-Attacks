@@ -33,7 +33,6 @@ class Attack(object):
         """
         self.target_cls.eval()
 
-        ori_list = []
         adv_list = []
         label_list = []
 
@@ -42,9 +41,8 @@ class Attack(object):
         total_num = len(data_loader)
 
         for step, (imgs, labels) in enumerate(data_loader):
-            adv_imgs = self.__call__(imgs, labels)
+            adv_imgs, labels = self.__call__(imgs, labels)
 
-            ori_list.append(imgs.cpu())
             adv_list.append(adv_imgs.cpu())
             label_list.append(labels.cpu())
 
@@ -62,20 +60,19 @@ class Attack(object):
             print('Progress : {:.2f}% / Accuracy : {:.2f}%'.format(
                 (step+1)/total_num*100, acc), end='\r')
 
-        originals = torch.cat(ori_list, 0)
         adversarials = torch.cat(adv_list, 0)
         y = torch.cat(label_list, 0)
 
         os.makedirs(save_path, exist_ok=True)
         save_path = os.path.join(save_path, file_name)
-        torch.save((originals, adversarials, y), save_path)
+        torch.save((adversarials, y), save_path)
         print("\n Save Images & Labels")
 
     def __call__(self, *args, **kwargs):
         self.target_cls.eval()
-        adv_examples = self.forward(*args, **kwargs)
+        adv_examples, labels = self.forward(*args, **kwargs)
 
         if self.mode.lower() == 'int':
-            adv_examples = (adv_examples*255).type(torch.uint8)
+            adv_examples, labels = (adv_examples*255).type(torch.uint8)
 
-        return adv_examples
+        return adv_examples, labels
