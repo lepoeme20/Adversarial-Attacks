@@ -34,4 +34,4 @@ class FGSM(Attack):
         adversarial_examples = imgs+(self.eps*gradients.sign())
         adversarial_examples = torch.clamp(adversarial_examples, min=0, max=1).detach()
 
-        return adversarial_examples
+        return adversarial_examples, labels

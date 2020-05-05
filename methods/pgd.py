@@ -44,4 +44,4 @@ class PGD(Attack):
             eta = torch.clamp(adversarial_examples - clone_imgs, min=-self.eps, max=self.eps)
             imgs = torch.clamp(clone_imgs + eta, min=0, max=1).detach()
 
-        return imgs
+        return imgs, labels

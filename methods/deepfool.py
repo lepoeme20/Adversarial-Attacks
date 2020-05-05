@@ -18,10 +18,12 @@ class DeepFool(Attack):
         super(DeepFool, self).__init__("DeepFool", target_cls)
         self.n_iters = args.deepFool_iters
 
-    def forward(self, imgs, _):
+    def forward(self, imgs, labels):
         imgs = imgs.to(self.device)
+        labels = labels.to(self.device)
 
         for idx, img in enumerate(imgs):
+            img = img.unsqueeze(0)
             img.requires_grad = True
 
             output = self.target_cls(img)[0]
@@ -49,7 +51,8 @@ class DeepFool(Attack):
                         continue
 
                     k_max = output[k]
-                    grad_k = torch.autograd.grad(k_max, img)[0]
+                    grad_k = torch.autograd.grad(
+                        k_max, img, retain_graph=True, create_graph=True)[0]
 
                     prime_max = k_max - first_max
                     grad_prime = grad_k - grad_first
@@ -67,4 +70,4 @@ class DeepFool(Attack):
 
             imgs[idx:idx+1, :, :, :] = img
 
-        return imgs
+        return imgs, labels

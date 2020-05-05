@@ -6,7 +6,7 @@ from attacks import Attack
 class CW(Attack):
     def __init__(self, target_cls, args):
         super(CW, self).__init__("CW", target_cls)
-        self.targeted = args.targeted
+        self.targeted = args.cw_targeted
         self.c = args.cw_c
         self.kappa = args.cw_kappa
         self.n_iters = args.cw_iters
@@ -22,7 +22,9 @@ class CW(Attack):
 
         for _ in range(self.binary_search_steps):
             delta = torch.zeros_like(imgs).to(self.device)
-            optimizer = torch.optim.Adam(delta.parameters(), lr=self.lr)
+            delta.detach_()
+            delta.requires_grad = True
+            optimizer = torch.optim.Adam([delta], lr=self.lr)
             prev_loss = 1e6
 
             for step in range(self.n_iters):
@@ -42,7 +44,7 @@ class CW(Attack):
                     prev_loss = loss
 
             adv_imgs = self.scaler(x_arctanh + delta).detach()
-            return adv_imgs
+            return adv_imgs, labels
 
     def _f(self, adv_imgs, labels):
         outputs = self.target_cls(adv_imgs)
