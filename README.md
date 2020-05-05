@@ -3,19 +3,16 @@ This repository provide famous adversarial attacks.
 
 <br>
 
-# 
 ## Dependencies
 - python 3.6.1
 - pytorch 1.4.0
 
-# 
 ## Papers
 - Explaining and harnessing adversarial example: [FGSM](https://arxiv.org/pdf/1412.6572.pdf)
 - Towards Evaluating the Robustness of Neural Networks: [CW](https://arxiv.org/pdf/1608.04644.pdf)
 - Towards Deep Learning Models Resistant to Adversarial Attacks: [PGD](https://arxiv.org/pdf/1706.06083.pdf)
 - DeepFool: a simple and accurate method to fool deep neural networks: [DeepFool](https://arxiv.org/pdf/1511.04599.pdf)
 
-# 
 ## Usage
 **Multi GPUs are allowed**
 ### Attacks
@@ -41,7 +38,7 @@ foo@bar:.../Attack-repo$ ./visualize.sh
 ```
 You can set option to save all images or just the one you have selected.
 
-```bash
+```console
 foo@bar:.../Attack-repo$ vim visualize.sh
 ```
 - parameters
@@ -53,7 +50,6 @@ foo@bar:.../Attack-repo$ vim visualize.sh
     - attack_method: 'DeepFool', 'FGSM', 'PGD', and 'DeepFool' are allowed. **You have to be careful about the case.**
     - dataset: 'cifar10' and 'cifar100' are allowed.
 
-# 
 ## Target Classifier
 Customized ResNet-based models are pre-treained on 'CIFAR-10' and 'CIFAR-100' dataset.
 
@@ -68,3 +64,22 @@ There are three pre-trained models on each dataset and you can download pre-trai
     - [resnet18]()
     - [resnet50]()
     - [resnet101](https://drive.google.com/file/d/15YQIh3gn4q9exacFCFWGofTXl8Mm_YyU/view?usp=sharing)
+
+The location of those files are
+```
+....|
+    - Attack-repo
+           |
+           - resnet
+                |
+                - pretrained_models
+                            |
+                            -cifar10
+                                |
+                                -resnet18.pth
+                                -resnet50.pth
+                                -resnet101.pth
+                            -cifar100
+                                |
+                                -resnet101.pth
+```
