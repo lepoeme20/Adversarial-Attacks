@@ -16,7 +16,7 @@ This repository provide famous adversarial attacks.
 ## Usage
 **Multi GPUs are allowed**
 ### Attacks
-```bash
+```console
 foo@bar:.../Attack-repo$ ./attack.sh
 ```
 
@@ -24,7 +24,7 @@ if you want to change hyper-parameter such as attack method or epsilons for atta
 
 Open the file on terminal or your favorite editor,
 
-```bash
+```console
 foo@bar:.../Attack-repo$ vim attack.sh
 ```
 
@@ -33,7 +33,7 @@ and change values in "Set parameters" block.
 You can check description in config.py
 
 ### Save images
-```bash
+```console
 foo@bar:.../Attack-repo$ ./visualize.sh
 ```
 You can set option to save all images or just the one you have selected.
